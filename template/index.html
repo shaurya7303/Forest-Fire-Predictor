@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forest Fire Prediction</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        header {
+            text-align: center;
+            animation: fadeIn 1s ease-in-out;
+        }
+        header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 6px rgba(0,0,0,0.4);
+        }
+        header p {
+            font-size: 1.1rem;
+            color: #ddd;
+        }
+        form {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            color: #fff;
+            max-width: 500px;
+            width: 100%;
+            padding: 25px;
+            border-radius: 15px;
+            margin-top: 20px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+            animation: slideUp 0.8s ease-out;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: 600;
+        }
+        input[type="number"] {
+            width: 100%;
+            padding: 12px;
+            margin-top: 6px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: 0.3s;
+        }
+        input[type="number"]:focus {
+            outline: none;
+            box-shadow: 0 0 10px rgba(255,255,255,0.5);
+        }
+        button {
+            margin-top: 25px;
+            padding: 14px;
+            width: 100%;
+            background: linear-gradient(to right, #ff512f, #dd2476);
+            color: white;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.3s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>🌲 Forest Fire Prediction</h1>
+    <p>Enter environmental data to predict fire risk instantly.</p>
+</header>
+
+<form action="/predict" method="POST">
+    <label>Temperature (°C)</label>
+    <input type="number" name="Temprature" step="any" required>
+
+    <label>Relative Humidity (%)</label>
+    <input type="number" name="RH" step="any" required>
+
+    <label>Wind Speed (km/h)</label>
+    <input type="number" name="Ws" step="any" required>
+
+    <label>Rain (mm)</label>
+    <input type="number" name="Rain" step="any" required>
+
+    <label>FFMC</label>
+    <input type="number" name="FFMC" step="any" required>
+
+    <label>DMC</label>
+    <input type="number" name="DMC" step="any" required>
+
+    <label>ISI</label>
+    <input type="number" name="ISI" step="any" required>
+
+    <label>Classes</label>
+    <input type="number" name="Classes" step="any" required>
+
+    <label>Region</label>
+    <input type="number" name="Region" step="any" required>
+
+    <button type="submit">🔥 Predict Risk</button>
+</form>
+
+</body>
+</html>

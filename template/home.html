@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction Result</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #283048, #859398);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .result-box {
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            color: #fff;
+            max-width: 500px;
+            width: 100%;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0px 8px 30px rgba(0,0,0,0.3);
+            animation: fadeIn 1s ease-in-out;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        h2 {
+            color: #fff;
+            margin-bottom: 15px;
+            text-shadow: 1px 1px 4px rgba(0,0,0,0.4);
+        }
+        .risk-bar {
+            height: 20px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 15px 0;
+        }
+        .risk-fill {
+            height: 100%;
+            width: 0%;
+            transition: width 1s ease;
+        }
+        .high { background: linear-gradient(to right, orange, red); }
+        .low { background: linear-gradient(to right, lightgreen, green); }
+        .risk-label {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 15px;
+            background: linear-gradient(to right, #ff512f, #dd2476);
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: bold;
+            transition: transform 0.2s, box-shadow 0.3s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="result-box">
+    <h2>🌲 Forest Fire Prediction Result</h2>
+    {% if results %}
+        <p class="risk-label">
+            Predicted Value: <span id="prediction">{{ results }}</span>
+        </p>
+        <div class="risk-bar">
+            <div id="riskFill" class="risk-fill"></div>
+        </div>
+        {% if results|float > 0.5 %}
+            <p class="risk-label" style="color: orange;">🔥 High Fire Risk</p>
+        {% else %}
+            <p class="risk-label" style="color: lightgreen;">✅ Low Fire Risk</p>
+        {% endif %}
+    {% else %}
+        <p>No prediction made yet.</p>
+    {% endif %}
+    <a href="/">🔄 Make Another Prediction</a>
+</div>
+
+<script>
+    const predictionElement = document.getElementById("prediction");
+    let value = parseFloat(predictionElement.innerText);
+    let current = 0;
+    let increment = value / 50;
+    let counter = setInterval(() => {
+        current += increment;
+        if (current >= value) {
+            current = value;
+            clearInterval(counter);
+        }
+        predictionElement.innerText = current.toFixed(2);
+    }, 20);
+
+    const riskFill = document.getElementById("riskFill");
+    if (value > 0.5) {
+        riskFill.classList.add("high");
+    } else {
+        riskFill.classList.add("low");
+    }
+    setTimeout(() => {
+        riskFill.style.width = (value * 100) + "%";
+    }, 200);
+</script>
+
+</body>
+</html>
+
